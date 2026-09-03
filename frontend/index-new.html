@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; connect-src http://127.0.0.1:5000; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
+    <title>find MY STL - 3D Shape Retrieval System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Base Styles -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4F46E5;
+            --success-color: #22C55E;
+            --page-bg: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --border-color: #E5E7EB;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --text-tertiary: #9CA3AF;
+            --hover-bg: #EEF2FF;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--page-bg);
+            color: var(--text-primary);
+        }
+
+        #app {
+            width: 100%;
+            height: 100%;
+        }
+
+        #viewContainer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="viewContainer"></div>
+    </div>
+
+    <!-- Main Application (New Clean Implementation) -->
+    <script type="module" src="js/new-dashboard.js"></script>
+</body>
+</html>

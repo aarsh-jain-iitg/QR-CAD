@@ -1,0 +1,539 @@
+/**
+ * stl-viewer.css – 3D Viewer & Results (Premium Bright Engineering Theme)
+ * Netflix Red accent, bright backgrounds, engineering-focused
+ * WHITE BACKGROUND 3D VIEWPORTS (Section 4-5 Premium Polish)
+ */
+
+:root {
+    --primary-color: var(--accent-primary);
+    --success-color: var(--success);
+    --success-bg: var(--success-bg);
+    --page-bg: var(--bg-base);
+    --card-bg: #FFFFFF;
+    --border-color: var(--glass-border);
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --text-tertiary: #9CA3AF;
+    --hover-bg: #F9FAFB;
+    --viewer-bg: #FFFFFF;  /* POLISH: Pure white background for 3D viewports */
+    --grid-minor: #E0E0E0;  /* Light gray minor grid lines */
+    --grid-major: #BDBDBD;  /* Darker gray major grid lines */
+    /* Remove gold/silver/bronze */
+    --gold: transparent;
+    --silver: transparent;
+    --bronze: transparent;
+}
+
+/* ============================================================
+   3D VIEWER – bright premium with WHITE background
+   ============================================================ */
+.stl-viewer-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--viewer-bg);
+    border-radius: var(--radius-card);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    box-shadow: var(--shadow-sm);
+}
+
+.stl-viewer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    background: #FAFBFD;
+}
+
+.stl-viewer-title-main {
+    font-size: var(--font-body);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.stl-viewer-title-sub {
+    font-size: var(--font-small);
+    color: var(--text-secondary);
+}
+
+.stl-viewer-control-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background: #F9FAFB;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    color: var(--text-secondary);
+}
+
+.stl-viewer-control-btn:hover {
+    background: #F3F4F6;
+    color: var(--accent-primary);
+    border-color: #D1D5DB;
+}
+
+.stl-viewer-canvas {
+    flex: 1;
+    width: 100%;
+    background: var(--viewer-bg);
+    position: relative;
+}
+
+.stl-viewer-canvas canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    background: var(--viewer-bg);
+}
+
+/* POLISH: Grid overlay for 3D viewport (Section 4-6) */
+.viewer-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--grid-minor) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+    background-size: 10px 10px;
+    background-position: 0 0, 0 0;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* Every 10th major grid line (heavier) – created via overlaid GridHelper */
+.viewer-grid-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--grid-major) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-major) 1px, transparent 1px);
+    background-size: 100px 100px;  /* Major line every 10 cells if minor is 10px */
+    background-position: 0 0, 0 0;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* ============================================================
+   LOADING / ERROR / PLACEHOLDER
+   ============================================================ */
+.stl-viewer-loading,
+.stl-viewer-error {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(31, 41, 55, 0.3);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    gap: 12px;
+    font-size: var(--font-body);
+    color: var(--text-secondary);
+}
+
+.stl-viewer-error { color: var(--error); }
+
+.stl-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(229, 9, 20, 0.15);
+    border-top-color: var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.stl-viewer-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(229, 9, 20, 0.02);
+    padding: var(--space-lg);
+    text-align: center;
+    z-index: 50;
+}
+
+.stl-placeholder-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: var(--space-md);
+    color: var(--text-tertiary);
+}
+
+.stl-placeholder-title {
+    font-size: var(--font-subheading);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.stl-placeholder-subtitle {
+    font-size: var(--font-body);
+    color: var(--text-secondary);
+}
+
+.stl-placeholder-hint {
+    font-size: var(--font-small);
+    color: var(--text-tertiary);
+}
+
+/* ============================================================
+   RESULTS TABLE – override scores/badges
+   ============================================================ */
+.results-table {
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.results-header {
+    display: grid;
+    grid-template-columns: 60px 1fr 60px;
+    gap: 0;
+    padding: 12px 16px;
+    background: #FAFBFD;
+    border-bottom: 1px solid var(--border-color);
+    font-size: var(--font-table-header);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-tertiary);
+}
+
+/* Remove the similarity column */
+.results-header .col-similarity { display: none; }
+
+.result-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 60px;
+    gap: 0;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    background: transparent;
+}
+
+.result-row:last-child { border-bottom: none; }
+
+.result-row:hover { background: #F9FAFB; }
+
+/* Neutralise top-match */
+.result-row.top-match {
+    background: #FFFFFF !important;
+    border-left: 3px solid var(--accent-primary);
+}
+
+/* Hide rank badges (gold/silver/bronze) and similarity */
+.rank-gold, .rank-silver, .rank-bronze,
+.similarity-value, .similarity-bar, .similarity-fill,
+.similarity-badge, .col-similarity,
+.metadata-similarity-box, .similarity-gauge-container {
+    display: none !important;
+}
+
+.rank-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 16px;
+    background: #F9FAFB;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.model-name {
+    font-size: var(--font-table-row);
+    font-weight: 500;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ============================================================
+   ACTION BUTTON
+   ============================================================ */
+.btn-download {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background: #F9FAFB;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: var(--transition-fast);
+}
+
+.btn-download:hover {
+    background: #F3F4F6;
+    color: var(--accent-primary);
+    border-color: #D1D5DB;
+}
+
+.btn-download svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.results-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    text-align: center;
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sm);
+}
+
+.results-empty .empty-state-icon { font-size: 48px; opacity: 0.3; }
+.results-empty .empty-state-text {
+    font-size: var(--font-body);
+    color: var(--text-secondary);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+    .results-header, .result-row { grid-template-columns: 50px 1fr 50px; }
+}
+
+@media (max-width: 768px) {
+    .results-header, .result-row { grid-template-columns: 40px 1fr 40px; }
+    .stl-viewer-container { min-height: 280px; }
+}
+
+
+/* ============================================================
+   LOADING / ERROR / PLACEHOLDER
+   ============================================================ */
+.stl-viewer-loading,
+.stl-viewer-error {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(31, 41, 55, 0.3);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    gap: 12px;
+    font-size: var(--font-body);
+    color: var(--text-secondary);
+}
+.stl-viewer-error { color: var(--error); }
+.stl-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(229, 9, 20, 0.15);
+    border-top-color: var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.stl-viewer-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(229, 9, 20, 0.02);
+    padding: var(--space-lg);
+    text-align: center;
+    z-index: 50;
+}
+.stl-placeholder-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: var(--space-md);
+    color: var(--text-tertiary);
+}
+.stl-placeholder-title {
+    font-size: var(--font-subheading);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.stl-placeholder-subtitle {
+    font-size: var(--font-body);
+    color: var(--text-secondary);
+}
+.stl-placeholder-hint {
+    font-size: var(--font-small);
+    color: var(--text-tertiary);
+}
+
+/* ============================================================
+   RESULTS TABLE – override scores/badges
+   ============================================================ */
+.results-table {
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+.results-header {
+    display: grid;
+    grid-template-columns: 60px 1fr 60px;
+    gap: 0;
+    padding: 12px 16px;
+    background: #FAFBFD;
+    border-bottom: 1px solid var(--border-color);
+    font-size: var(--font-table-header);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-tertiary);
+}
+/* Remove the similarity column */
+.results-header .col-similarity { display: none; }
+
+.result-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 60px;
+    gap: 0;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+    background: transparent;
+}
+.result-row:last-child { border-bottom: none; }
+.result-row:hover { background: #F9FAFB; }
+
+/* Neutralise top-match */
+.result-row.top-match {
+    background: #FFFFFF !important;
+    border-left: 3px solid var(--accent-primary);
+}
+
+/* Hide rank badges (gold/silver/bronze) and similarity */
+.rank-gold, .rank-silver, .rank-bronze,
+.similarity-value, .similarity-bar, .similarity-fill,
+.similarity-badge, .col-similarity,
+.metadata-similarity-box, .similarity-gauge-container {
+    display: none !important;
+}
+
+.rank-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 16px;
+    background: #F9FAFB;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.model-name {
+    font-size: var(--font-table-row);
+    font-weight: 500;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ============================================================
+   ACTION BUTTON
+   ============================================================ */
+.btn-download {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background: #F9FAFB;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+.btn-download:hover {
+    background: #F3F4F6;
+    color: var(--accent-primary);
+    border-color: #D1D5DB;
+}
+.btn-download svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.results-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    text-align: center;
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sm);
+}
+.results-empty .empty-state-icon { font-size: 48px; opacity: 0.3; }
+.results-empty .empty-state-text {
+    font-size: var(--font-body);
+    color: var(--text-secondary);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+    .results-header, .result-row { grid-template-columns: 50px 1fr 50px; }
+}
+@media (max-width: 768px) {
+    .results-header, .result-row { grid-template-columns: 40px 1fr 40px; }
+    .stl-viewer-container { min-height: 280px; }
+}

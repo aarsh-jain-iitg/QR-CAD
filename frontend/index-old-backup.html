@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; connect-src http://127.0.0.1:5000; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
+    <title>QRCAD Retrieval System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Chakra+Petch:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="scanline"></div>
+    <div class="grid-bg"></div>
+
+    <div class="app-wrapper">
+
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="logo-block">
+                <span class="logo-bracket">[</span>
+                <span class="logo-text">QR<span class="logo-accent">CAD</span></span>
+                <span class="logo-bracket">]</span>
+            </div>
+            <p class="tagline">3D Shape Retrieval System</p>
+            <div class="header-line"></div>
+        </header>
+
+        <!-- MAIN PANEL -->
+        <main class="main-panel">
+
+            <!-- DATASET SECTION -->
+            <section class="panel" id="datasetPanel">
+                <div class="panel-label">01 // DATASET</div>
+
+                <div class="input-row">
+                    <div class="field-group">
+                        <label class="field-label" for="datasetPathDisplay">Dataset Folder Path</label>
+                        <div class="input-with-btn">
+                            <input type="text" id="datasetPathDisplay" class="text-input" value="dataset"
+                                placeholder="/path/to/dataset" readonly>
+                            <button id="selectDatasetBtn" class="btn btn-ghost">
+                                <span class="btn-icon">...</span> Browse
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-row">
+                    <button id="checkCacheBtn" class="btn btn-secondary">
+                        <span class="btn-icon">?</span> Check Cache
+                    </button>
+                    <button id="buildCacheBtn" class="btn btn-primary">
+                        <span class="btn-icon">+</span> Build Cache
+                    </button>
+                    <button id="deleteCacheBtn" class="btn btn-danger">
+                        <span class="btn-icon">x</span> Delete Cache
+                    </button>
+                </div>
+
+                <div id="cacheInfo" class="cache-info hidden"></div>
+            </section>
+
+            <!-- SEARCH SECTION -->
+            <section class="panel" id="searchPanel">
+                <div class="panel-label">02 // QUERY</div>
+
+                <div class="field-group">
+                    <label class="field-label">Upload STL File</label>
+                    <div class="file-drop-zone" id="dropZone">
+                        <input type="file" id="queryFile" accept=".stl" class="file-input-hidden">
+                        <div class="drop-content" id="dropContent">
+                            <div class="drop-icon">STL</div>
+                            <div class="drop-text">Drop STL file here or <span class="drop-link">click to browse</span>
+                            </div>
+                            <div class="drop-hint" id="fileNameDisplay">No file selected</div>
+                        </div>
+                    </div>
+                    <div id="queryDownloadBar" class="query-download-bar hidden">
+                        <span class="query-dl-label" id="queryDlLabel">No file selected</span>
+                        <button id="queryDownloadBtn" class="btn-dl-query">
+                            Download Query
+                        </button>
+                    </div>
+                </div>
+
+                <div class="btn-row">
+                    <button id="searchBtn" class="btn btn-primary btn-wide">
+                        <span class="btn-icon">3D</span>
+                        <span id="searchBtnText">Run Similarity Search</span>
+                        <span id="searchSpinner" class="spinner hidden"></span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- RESULTS SECTION -->
+            <section class="panel" id="resultsPanel">
+                <div class="panel-label">03 // RESULTS</div>
+
+                <div class="btn-row" style="margin-bottom: 14px;">
+                    <button id="exportCsvBtn" class="btn btn-secondary" disabled title="No results to export">
+                        <span class="btn-icon">CSV</span> Export CSV
+                    </button>
+                    <button id="exportPdfBtn" class="btn btn-secondary" disabled title="No results to export">
+                        <span class="btn-icon">PDF</span> Export PDF
+                    </button>
+                </div>
+
+                <div id="resultsTableWrapper">
+                    <table id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th class="col-rank">Rank</th>
+                                <th class="col-model">Model</th>
+                                <th class="col-sim">Similarity</th>
+                                <th class="col-bar">Match</th>
+                                <th class="col-dl">DL</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody">
+                            <tr class="empty-row">
+                                <td colspan="5">
+                                    <span class="empty-msg"> awaiting query </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <pre id="output" class="output-log hidden"></pre>
+            </section>
+
+            <!-- 3D COMPARISON SECTION -->
+            <section class="panel hidden" id="comparisonPanel">
+                <div class="panel-label">04 // 3D COMPARISON</div>
+                <h2 class="comparison-title">3D Comparison</h2>
+                <div class="comparison-grid">
+                    <div class="viewer-block">
+                        <div class="viewer-title">Query Model</div>
+                        <div id="queryViewer" class="three-viewer"></div>
+                    </div>
+                    <div class="viewer-block">
+                        <div class="viewer-title">Best Match Model</div>
+                        <div id="matchViewer" class="three-viewer"></div>
+                    </div>
+                </div>
+                <div id="comparisonScore" class="comparison-score">Similarity Score: --</div>
+            </section>
+
+        </main>
+
+        <footer class="app-footer">
+            <span>QRCAD v2.0</span>
+            <span class="footer-dot"></span>
+            <span>PCA-Based 3D Retrieval</span>
+            <span class="footer-dot"></span>
+            <span id="backendStatus" class="status-dot offline">Backend: Connecting</span>
+        </footer>
+
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+
+</body>
+
+</html>

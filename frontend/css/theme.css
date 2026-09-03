@@ -1,0 +1,276 @@
+/**
+ * QRCAD – Premium Bright Engineering Design System V3
+ * Inspired by: Apple VisionOS, Xcode, Fusion 360, Onshape, Tesla UI
+ * Visual Language: Bright, Premium, Elegant, Minimal, Engineering-Focused
+ */
+
+:root {
+    /* Backgrounds – Bright Premium */
+    --bg-base: #F6F7FB;
+    --bg-secondary: #FFFFFF;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #FAFBFD;
+    --bg-elevated: #FFFFFF;
+
+    /* Glass */
+    --glass-bg: rgba(255, 255, 255, 0.92);
+    --glass-bg-strong: rgba(255, 255, 255, 0.95);
+    --glass-border: #E8EBF2;
+    --glass-border-hover: #D8DCE8;
+    --blur-amount: 16px;
+
+    /* Accents – Netflix Red Only */
+    --accent-primary: #E50914;
+    --accent-secondary: #E50914;
+    --accent-highlight: #E50914;
+    --accent-info: #6B7280;
+    --accent-gradient: linear-gradient(135deg, #E50914 0%, #C90812 100%);
+    --accent-gradient-hover: linear-gradient(135deg, #C90812 0%, #A00609 100%);
+    --accent-glow: 0 0 20px rgba(229, 9, 20, 0.18);
+    --accent-glow-purple: 0 0 20px rgba(229, 9, 20, 0.18);
+
+    /* Semantic */
+    --success: #059669;
+    --success-bg: rgba(5, 150, 105, 0.08);
+    --success-border: rgba(5, 150, 105, 0.2);
+    --warning: #D97706;
+    --warning-bg: rgba(217, 119, 6, 0.08);
+    --warning-border: rgba(217, 119, 6, 0.2);
+    --error: #E50914;
+    --error-bg: rgba(229, 9, 20, 0.08);
+    --error-border: rgba(229, 9, 20, 0.2);
+    --info-bg: rgba(107, 114, 128, 0.08);
+    --info-border: rgba(107, 114, 128, 0.2);
+
+    /* Text */
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --text-muted: #9CA3AF;
+
+    /* Typography – Premium Engineering */
+    --font-primary: 'Inter', 'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', sans-serif;
+    --font-display: 'Inter', 'SF Pro Display', '-apple-system', sans-serif;
+
+    --font-app-name: 36px;
+    --font-page-title: 30px;
+    --font-section: 22px;
+    --font-card-title: 20px;
+    --font-body: 16px;
+    --font-label: 14px;
+    --font-small: 13px;
+
+    /* Legacy aliases */
+    --font-heading: var(--font-section);
+    --font-subheading: var(--font-card-title);
+    --font-button: var(--font-label);
+    --font-table-header: var(--font-label);
+    --font-table-row: var(--font-body);
+    --violet: var(--accent-primary);
+    --violet-bg: rgba(229, 9, 20, 0.08);
+    --violet-border: rgba(229, 9, 20, 0.15);
+    --cyan: var(--accent-info);
+    --success-color: var(--success);
+    --warning-color: var(--warning);
+
+    /* Spacing */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+
+    /* Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
+    --radius-card: 18px;
+    --radius-btn: 8px;
+    --radius-full: 9999px;
+
+    /* Shadows – Subtle, Apple-like */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.08);
+    --shadow-glow: var(--accent-glow);
+    --shadow-lift: 0 12px 28px rgba(0, 0, 0, 0.1);
+
+    /* Transitions */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-page: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-drawer: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-modal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Layout */
+    --topbar-height: 72px;
+    --sidebar-width: 90px;
+    --info-panel-width: 380px;
+
+    /* Z-index */
+    --z-sidebar: 100;
+    --z-topbar: 200;
+    --z-drawer: 500;
+    --z-overlay: 450;
+    --z-modal: 1000;
+    --z-toast: 10000;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+    font-size: var(--font-body);
+    line-height: 1.6;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.hidden { display: none !important; }
+.text-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.text-sm { font-size: var(--font-small); }
+.text-xs { font-size: 12px; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: #D1D5DB;
+    border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+
+/* Progress dialog */
+.progress-dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(31, 41, 55, 0.4);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-modal);
+    animation: fadeIn var(--transition-modal);
+}
+
+.progress-dialog {
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(var(--blur-amount));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lift);
+    width: 90%;
+    max-width: 440px;
+    padding: 0;
+    overflow: hidden;
+    animation: scaleIn var(--transition-modal);
+}
+
+.progress-dialog-header {
+    padding: var(--space-lg) var(--space-lg) var(--space-md);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.progress-dialog-title {
+    margin: 0;
+    font-size: var(--font-section);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.progress-dialog-content { padding: var(--space-lg); }
+
+.progress-message {
+    font-size: var(--font-body);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+}
+
+.progress-ring-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.progress-ring {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+.progress-ring svg {
+    transform: rotate(-90deg);
+    filter: drop-shadow(0 0 12px rgba(255, 48, 79, 0.4));
+}
+
+.progress-ring-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.06);
+    stroke-width: 6;
+}
+
+.progress-ring-fill {
+    fill: none;
+    stroke: url(#progressGradient);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.4s ease;
+}
+
+.progress-percent {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.progress-bar-container { position: relative; margin-bottom: var(--space-md); }
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--accent-gradient);
+    border-radius: var(--radius-full);
+    transition: width 0.4s ease;
+    box-shadow: 0 0 12px rgba(255, 48, 79, 0.4);
+}
+
+.progress-text {
+    font-size: var(--font-label);
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.progress-details {
+    font-size: var(--font-small);
+    color: var(--text-muted);
+    text-align: center;
+    min-height: 20px;
+}

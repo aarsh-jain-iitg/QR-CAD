@@ -1,0 +1,13 @@
+﻿/dist/
+/dist_backend/
+/build/
+*.exe
+*.pkg
+*.pyz
+*.toc
+*.blockmap.gz
+**/__pycache__/
+*.pyc
+*.pkl
+/logs/
+/node_modules/

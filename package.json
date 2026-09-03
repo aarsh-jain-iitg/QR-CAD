@@ -1,0 +1,70 @@
+{
+    "name": "qrcad",
+    "version": "2.0.0",
+    "description": "Professional CAD Retrieval Platform",
+    "author": "Gowtham Royal",
+    "main": "electron/main.js",
+    "scripts": {
+        "start": "electron .",
+        "build": "electron-builder --win --x64"
+    },
+    "devDependencies": {
+        "electron": "^29.0.0",
+        "electron-builder": "^24.0.0"
+    },
+    "build": {
+        "appId": "com.qrcad.app",
+        "productName": "QRCAD",
+        "copyright": "Copyright © 2024 Gowtham Royal",
+        "directories": {
+            "output": "dist"
+        },
+        "files": [
+            "electron/**/*",
+            "frontend/**/*",
+            "assets/**/*",
+            "node_modules/**/*"
+        ],
+        "asarUnpack": [
+            "electron/preload.js"
+        ],
+        "extraResources": [
+            {
+                "from": "dist_backend/",
+                "to": "backend/",
+                "filter": [
+                    "**/*"
+                ]
+            }
+        ],
+        "win": {
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64"
+                    ]
+                }
+            ],
+            "icon": "assets/icon.ico"
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true,
+            "createDesktopShortcut": true,
+            "createStartMenuShortcut": true,
+            "shortcutName": "QRCAD",
+            "uninstallDisplayName": "QRCAD - CAD Retrieval Platform",
+            "deleteAppDataOnUninstall": false,
+            "runAfterFinish": true,
+            "menuCategory": true,
+            "perMachine": false,
+            "installerIcon": "assets/icon.ico",
+            "uninstallerIcon": "assets/icon.ico"
+        },
+        "artifactName": "QRCAD_Setup_v${version}.exe"
+    },
+    "dependencies": {
+        "three": "^0.184.0"
+    }
+}
